@@ -1,0 +1,35 @@
+######################################################
+This is pseudo character driver for a single device.
+
+pcd.c :
+=======
+This is source file for the driver code which
+contains the driver init/exit code along with basic 
+file operations. The class and device are also created
+ which are can be seen under /sys directory after 
+loading the driver.
+
+Makefile:
+========= 
+This is makefile used to build the module.
+
+Build command: 
+=============
+Following build command can be used to
+build this module 'out of tree' for the linux version
+of your host machine :
+
+sudo make -C /lib/modules/5.19.0-46-generic/build M=$PWD modules
+
+Note: Replace '5.19.0-46-generic' with your host linux
+version (can be found by running 'uname -r')
+
+
+Load/Unload module:
+==================
+To load the module dynamically into your host kernel:
+sudo insmod pcd.ko
+
+To unload:
+sudo rmmod pcd.ko (or only 'pcd')
+######################################################
