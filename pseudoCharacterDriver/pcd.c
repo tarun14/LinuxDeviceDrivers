@@ -1,3 +1,28 @@
+/***********************************************************************
+* FILENAME :        pcd.c
+*
+* DESCRIPTION :
+*       pseudo character driver with various operations for single device.
+*
+* PUBLIC FUNCTIONS :
+*
+*
+*
+* NOTES :
+*
+*
+*
+*       Copyright info:
+*
+* AUTHOR :    Tarun14        START DATE : Jul 08, 2024
+*
+* CHANGES :
+*
+* REF NO  VERSION DATE    WHO     DETAIL
+*
+*
+***********************************************************************/
+
 #include <linux/module.h>
 #include <linux/fs.h>
 #include <linux/cdev.h>
