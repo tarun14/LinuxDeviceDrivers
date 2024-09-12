@@ -15,7 +15,7 @@
 *
 *       Copyright info:
 *
-* AUTHOR :    Tarun14        START DATE : Jul 08, 2024
+* AUTHOR :    Tarun Chauhan        START DATE : Jul 08, 2024
 *
 * CHANGES :
 *
@@ -100,12 +100,6 @@ struct pcdrv_private_data pcdrv_data =
 	}
 };
 
-
-
-
-//dev_t device_number;
-/* Cdev variable */
-//struct cdev pcd_cdev;
 
 loff_t pcd_llseek (struct file *filp, loff_t offset, int whence)
 {
@@ -270,12 +264,8 @@ static int __init pcd_driver_init(void)
 	    goto out;
     }
 
-    /*4. create device class under /sys/class/ */
-//#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 4, 0)    
+    /*2. create device class under /sys/class/ */
     pcdrv_data.class_pcd = class_create(THIS_MODULE, "pcd_class");
-//#else
-  //  pcdrv_data.class_pcd = class_create("pcd_class");
-//#endif
     if(IS_ERR(pcdrv_data.class_pcd)){
     	pr_err("Class creation failed\n");
 	ret = PTR_ERR(pcdrv_data.class_pcd);
@@ -284,12 +274,12 @@ static int __init pcd_driver_init(void)
 
     for(i=0;i<NO_OF_DEVICES;i++){
     	pr_info("Device number <major>:<minor> = %d:%d\n",MAJOR(pcdrv_data.device_number+i),MINOR(pcdrv_data.device_number+i));
-    
-    	/*2. Initialize the cdev structure with fops */
+
+        /*3. Initialize the cdev structure with fops */
     	/* Initialize the device */
     	cdev_init(&pcdrv_data.pcdev_data[i].cdev, &pcd_fops);
 
-    	/*3. Register the device with VFS */
+        /*4. Register the device with VFS */
     	/* Add device to kernel, so that userspace apis reach the driver */
     	pcdrv_data.pcdev_data[i].cdev.owner = THIS_MODULE;
     	ret = cdev_add(&pcdrv_data.pcdev_data[i].cdev,pcdrv_data.device_number+i, 1);
