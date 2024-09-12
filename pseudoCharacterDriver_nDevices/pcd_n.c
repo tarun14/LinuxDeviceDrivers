@@ -5,12 +5,21 @@
 *       pseudo character driver with various operations to handle 4
 *       devices.
 *
+*       * 'NO_OF_DEVICES' devices have been created in the driver
+*       *  code itself and various device handlers have been provided.
+*       * 
+*       * A user-space application source - 'user_space_Device_read.c' 
+*       * has been provided which can be used to access these pseudo
+*       * character devices as per their individual permissions.
+* 
+*
 * PUBLIC FUNCTIONS :
 *
 *
 *
 * NOTES :
-*
+*       * The synchronizations mechanisms (Locks) are yet to be added
+*       * and the current code is not 'race condition' safe yet.
 *
 *
 *       Copyright info:
