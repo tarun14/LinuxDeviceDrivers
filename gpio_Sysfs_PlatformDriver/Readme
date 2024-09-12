@@ -1,0 +1,67 @@
+######################################################
+A gpio platform driver that controls the user led pins of 
+beaglebone black by using Linux gpio subsystem. Device 
+entries are created under 'sysfs' soon the device is detected
+and the same can be accessed (read/write) via sysfs.
+
+gpio-sysfs.c :
+============
+This is source file for the driver code which
+contains the driver init/exit code along with basic 
+operations.
+
+am335x-boneblack-lddpractice.dtsi
+=================================
+The device tree include file which contains the 
+hardware information details of our user leds device.
+This is included in the main 'am335x-boneblack.dts'
+file.
+
+
+am335x-bone-common.dtsi
+=======================
+The beagle bone black common dtsi file. It is needed
+to be modified to be able to use led pins as by 
+default same were being used by some other system.
+we commented the code so that we can use these in our
+driver.
+
+am335x-boneblack.dts
+====================
+The main dts file. This needs to include - 
+am335x-boneblack-lddpractice.dtsi so that modifications
+related leds can be applied. A binary (dtb) has to be
+created and put in /BOOT directory of SD card so that
+kernel can get the HW info about leds during boot time.
+Check 'Build commands' section below for the compilation
+command.
+
+Makefile:
+========= 
+This is makefile used to build the module.
+
+Build command: 
+=============
+Following build command can be used to
+build this module 'out of tree' for the linux version
+of your host machine :
+
+sudo make -C /lib/modules/5.19.0-46-generic/build M=$PWD modules
+
+Note: Replace '5.19.0-46-generic' with your host linux
+version (can be found by running 'uname -r')
+
+Build the device tree binary:
+============================
+Run below command from kernel source directory:
+
+$ sudo make ARCH=arm CROSS_COMPILE=arm-linux-gnueabihf- am335x-boneblack.dtb
+
+Load/Unload module:
+==================
+To load the module dynamically into your host kernel:
+sudo insmod gpio-sysfs.ko
+
+To unload:
+sudo rmmod gpio-sysfs.ko (or only 'gpio-sysfs')
+######################################################
